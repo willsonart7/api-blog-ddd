@@ -1,5 +1,7 @@
 import { Test } from '@nestjs/testing';
+import { PostMongoRepository } from 'src/post/infraestructure/repositories/post.mongodb.repository';
 import { SharedModule } from 'src/shared/shared.module';
+import { PostCreateService } from './post.create.service';
 
 describe('Post', () => {
 
