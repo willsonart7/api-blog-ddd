@@ -1,11 +1,11 @@
 import { Test } from '@nestjs/testing';
-import { PostMongoRepository } from 'src/post/infraestructure/repositories/post.mongodb.repository';
+import { PostPostgresRepository } from 'src/post/infraestructure/repositories/post.postgres.repository';
 import { SharedModule } from 'src/shared/shared.module';
 import { PostCreateService } from './post.create.service';
 
 describe('Post', () => {
     let postCreateService: PostCreateService;
-    let postMongoRepository: PostMongoRepository;
+    let postPostgresRepository: PostPostgresRepository;
 
     beforeEach(async () => {
         const moduleRef = await Test.createTestingModule({
@@ -13,7 +13,7 @@ describe('Post', () => {
             providers: [
                 PostCreateService,
                 {
-                    provide: PostMongoRepository,
+                    provide: PostPostgresRepository,
                     useValue: {
                         save: () => {},
                     },
@@ -21,8 +21,8 @@ describe('Post', () => {
             ],
         }).compile();
         postCreateService = moduleRef.get<PostCreateService>(PostCreateService);
-        postMongoRepository =
-            moduleRef.get<PostMongoRepository>(PostMongoRepository);
+        postPostgresRepository =
+            moduleRef.get<PostPostgresRepository>(PostPostgresRepository);
     });
 
     describe('create', () => {
@@ -31,11 +31,11 @@ describe('Post', () => {
             const name = 'Post test example';
             const description = 'Post test example description';
 
-            jest.spyOn(postMongoRepository, 'save').getMockImplementation();
+            jest.spyOn(postPostgresRepository, 'save').getMockImplementation();
 
             await postCreateService.execute(id, name, description);
 
-            expect(postMongoRepository.save).toBeCalled();
+            expect(postPostgresRepository.save).toBeCalled();
         });
     });
 });

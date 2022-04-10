@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { PostNotFoundError } from 'src/post/domain/post.notFound.error';
 import { PostObjectMother } from 'src/post/domain/__mocks__/post.object.mother';
-import { PostMongoRepository } from 'src/post/infraestructure/repositories/post.mongodb.repository';
+import { PostPostgresRepository } from 'src/post/infraestructure/repositories/post.postgres.repository';
 import { SharedModule } from 'src/shared/shared.module';
 import { PostFindService } from '../find/post.find.service';
 import { PostDeleteService } from './post.delete.service';
@@ -9,7 +9,7 @@ import { PostDeleteService } from './post.delete.service';
 describe('Post', () => {
     let postDeleteService: PostDeleteService;
     let postFindService: PostFindService;
-    let postMongoRepository: PostMongoRepository;
+    let postPostgresRepository: PostPostgresRepository;
 
     beforeEach(async () => {
         const moduleRef = await Test.createTestingModule({
@@ -23,7 +23,7 @@ describe('Post', () => {
                     },
                 },
                 {
-                    provide: PostMongoRepository,
+                    provide: PostPostgresRepository,
                     useValue: {
                         save: () => {},
                     },
@@ -32,15 +32,15 @@ describe('Post', () => {
         }).compile();
         postDeleteService = moduleRef.get<PostDeleteService>(PostDeleteService);
         postFindService = moduleRef.get<PostFindService>(PostFindService);
-        postMongoRepository =
-            moduleRef.get<PostMongoRepository>(PostMongoRepository);
+        postPostgresRepository =
+            moduleRef.get<PostPostgresRepository>(PostPostgresRepository);
     });
 
     describe('delete', () => {
         it('should be deleted', async () => {
             const id = '41b8316f-5e68-4b2d-8699-f9189de55399';
 
-            jest.spyOn(postMongoRepository, 'save').getMockImplementation();
+            jest.spyOn(postPostgresRepository, 'save').getMockImplementation();
 
             jest.spyOn(postFindService, 'execute').mockImplementation(
                 async () => {
@@ -50,13 +50,13 @@ describe('Post', () => {
 
             await postDeleteService.execute(id);
 
-            expect(postMongoRepository.save).toBeCalled();
+            expect(postPostgresRepository.save).toBeCalled();
         });
 
         it('should be PostNotFound', async () => {
             const id = '41b8316f-5e68-4b2d-8699-f9189de55399';
 
-            jest.spyOn(postMongoRepository, 'save').getMockImplementation();
+            jest.spyOn(postPostgresRepository, 'save').getMockImplementation();
 
             jest.spyOn(postFindService, 'execute').mockImplementation(
                 async () => {

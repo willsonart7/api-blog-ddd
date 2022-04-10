@@ -9,7 +9,9 @@ export class PostEntity {
     @Column()
     name : string
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     description : string
 
     @Column()
@@ -21,7 +23,9 @@ export class PostEntity {
     @Column()
     createdAt: Date
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     deletedAt: Date
 
 }

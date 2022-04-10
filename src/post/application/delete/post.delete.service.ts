@@ -6,8 +6,7 @@ import { PostFindService } from '../find/post.find.service';
 @Injectable()
 export class PostDeleteService {
     constructor(
-        @Inject('PostMongoRepository')
-        private readonly repository: PostRepository,
+        @Inject('PostPostgresRepository') private readonly repository: PostRepository,
         private readonly postFindService: PostFindService,
     ) {}
 

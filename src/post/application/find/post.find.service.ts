@@ -6,7 +6,7 @@ import { PostRepository } from 'src/post/domain/post.repository';
 @Injectable()
 export class PostFindService {
     constructor(
-        @Inject('PostMongoRepository')
+        @Inject('PostPostgresRepository')
         private readonly repository: PostRepository,
     ) {}
 

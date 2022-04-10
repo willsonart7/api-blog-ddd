@@ -8,7 +8,7 @@ import { PostRepository } from 'src/post/domain/post.repository';
 @Injectable()
 export class PostCreateService {
     constructor(
-        @Inject('PostMongoRepository')
+        @Inject('PostPostgresRepository')
         private readonly repository: PostRepository,
     ) {}
 

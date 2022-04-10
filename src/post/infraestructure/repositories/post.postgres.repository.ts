@@ -1,4 +1,5 @@
-import { Connection } from "typeorm";
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { PostRepository } from "src/post/domain/post.repository";
 import { PostEntity } from "src/shared/infraestructure/libs/postgres/entities/post.entity";
 import { Post } from "src/post/domain/post";
@@ -7,38 +8,37 @@ import { PostId } from "src/post/domain/post.id";
 export class PostPostgresRepository implements PostRepository {
 
     constructor(
-        private db: Connection,
+        @InjectRepository(PostEntity)
+        private db: Repository<PostEntity>,
     ) { }
 
     async find(postId: PostId): Promise<Post | null> {
-        const postsRaw = await this.db.getRepository(PostEntity)
-            .createQueryBuilder()
+        const postRaw = await this.db.createQueryBuilder()
             .where("id = :id", { id: postId.getValue() })
             .getOne();
 
-        if (!postsRaw) {
+        if (!postRaw) {
             return null;
         }
 
-        return Post.toDomain(postsRaw);
+        return Post.toDomain(postRaw);
     }
 
     async findAll(): Promise<Post[]> {
-        const postsRaw = await this.db.getRepository(PostEntity)
-            .createQueryBuilder()
-            .getMany();
+        const postsRaw = await this.db.createQueryBuilder()
+        .where("status = :status", { status: "active" })
+        .getMany()
 
         return postsRaw.map(postRaw => (Post.toDomain(postRaw)));
     }
 
     async save(post: Post): Promise<void> {
 
-        const postsRaw = await this.db.getRepository(PostEntity)
-            .createQueryBuilder()
+        const postRaw = await this.db.createQueryBuilder()
             .where("id = :id", { id: post.getId.getValue() })
             .getOne();
 
-        if (postsRaw) {
+        if (postRaw) {
             this.db.createQueryBuilder()
                 .update(PostEntity)
                 .set({ ...post.toPersistence() })
