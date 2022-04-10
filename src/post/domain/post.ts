@@ -6,23 +6,36 @@ import { PostName } from "./post.name";
 interface Props {
     name: PostName;
     description: PostDescription;
+    status: "active" | "inactive";
+    updatedAt: Date;
+    createdAt: Date;
+    deletedAt: Date;
+}
+
+interface CreateProps {
+    name: PostName;
+    description: PostDescription;
 }
 
 export class Post extends AggregateRoot<Props> {
-
 
     private constructor(props: Props, id: PostId) {
         super(props, id)
     }
 
-    public static create(props: Props, id: PostId, ): Post {
+    public static create(props: CreateProps, id: PostId, ): Post {
 
         const post = new Post({
             ...props,
+            status: "active",
+            updatedAt: new Date(),
+            createdAt: new Date(),
+            deletedAt: null,
         }, id)
 
         return post
     }
+
 
     public static toDomain(raw: any): Post {
 
@@ -32,17 +45,30 @@ export class Post extends AggregateRoot<Props> {
 
         const post = new Post({
             name: postName,
-            description: postDescription
+            description: postDescription,
+            status: raw.status,
+            updatedAt: raw.updatedAt,
+            createdAt: raw.createdAt,
+            deletedAt: raw.deletedAt,
         }, postId)
 
         return post
     }
 
+    public delete() {
+        this.props.status = "inactive"
+        this.props.deletedAt = new Date()
+    }
+
     public toPersistence() {
         return {
             id: this.getId.getValue(),
+            status: this.props.status,
             name: this.props.name.getValue(),
             description: this.props.description.getValue(),
+            updatedAt: this.props.updatedAt,
+            createdAt: this.props.createdAt,
+            deletedAt: this.props.deletedAt,
         }
     }
 
@@ -50,7 +76,11 @@ export class Post extends AggregateRoot<Props> {
         return {
             id: this.getId.getValue(),
             name: this.props.name.getValue(),
+            status: this.props.status,
             description: this.props.description.getValue(),
+            updatedAt: this.props.updatedAt,
+            createdAt: this.props.createdAt,
+            deletedAt: this.props.deletedAt,
         }
     }
 
