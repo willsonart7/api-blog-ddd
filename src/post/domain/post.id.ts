@@ -1,4 +1,4 @@
-import { UniqueValueObject } from "src/shared/domain/value_object/unique.value.object";
+import { UniqueValueObject } from 'src/shared/domain/value_object/unique.value.object';
 
 export class PostId extends UniqueValueObject {
     private constructor(id?: string) {

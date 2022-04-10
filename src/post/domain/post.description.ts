@@ -1,4 +1,4 @@
-import { StringValueObject } from "src/shared/domain/value_object/string.value.object";
+import { StringValueObject } from 'src/shared/domain/value_object/string.value.object';
 
 export class PostDescription extends StringValueObject {
     private constructor(value: string) {
