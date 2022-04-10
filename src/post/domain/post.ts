@@ -40,7 +40,7 @@ export class Post extends AggregateRoot<Props> {
     public static toDomain(raw: any): Post {
         const postId = PostId.create(raw.id);
         const postName = PostName.create(raw.name);
-        const postDescription = PostName.create(raw.name);
+        const postDescription = PostDescription.create(raw.description);
 
         const post = new Post(
             {
