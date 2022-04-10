@@ -2,9 +2,9 @@ import { Inject } from '@nestjs/common';
 import { Db } from 'mongodb';
 import { Post } from 'src/post/domain/post';
 import { PostId } from 'src/post/domain/post.id';
-import { MongoRepository } from 'src/post/domain/post.repository';
+import { PostRepository } from 'src/post/domain/post.repository';
 
-export class PostMongoRepository implements MongoRepository {
+export class PostMongoRepository implements PostRepository {
     constructor(@Inject('DATABASE_CONNECTION') private db: Db) { }
 
     private collectionName(): string {

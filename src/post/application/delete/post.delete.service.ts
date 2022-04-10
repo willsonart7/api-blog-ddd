@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PostNotFoundError } from 'src/post/domain/post.notFound.error';
-import { MongoRepository } from 'src/post/domain/post.repository';
+import { PostRepository } from 'src/post/domain/post.repository';
 import { PostFindService } from '../find/post.find.service';
 
 @Injectable()
 export class PostDeleteService {
     constructor(
         @Inject('PostMongoRepository')
-        private readonly repository: MongoRepository,
+        private readonly repository: PostRepository,
         private readonly postFindService: PostFindService,
     ) {}
 

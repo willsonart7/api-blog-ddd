@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Post } from 'src/post/domain/post';
-import { MongoRepository } from 'src/post/domain/post.repository';
+import { PostRepository } from 'src/post/domain/post.repository';
 
 @Injectable()
 export class PostSearchService {
     constructor(
-        @Inject('PostMongoRepository') private readonly repository: MongoRepository,
+        @Inject('PostMongoRepository') private readonly repository: PostRepository,
     ) {}
 
     async execute(): Promise<Post[]> {
