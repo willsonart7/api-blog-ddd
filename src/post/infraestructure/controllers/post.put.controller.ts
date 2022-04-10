@@ -2,7 +2,6 @@ import {
     Controller,
     HttpException,
     HttpStatus,
-    UseGuards,
     Param,
     Body,
     ParseUUIDPipe,
@@ -13,7 +12,7 @@ import { PostCreateDto } from '../dtos/post.create.dto';
 
 @Controller('post')
 export class PostPutController {
-    constructor(private postCreateService: PostCreateService) {}
+    constructor(private postCreateService: PostCreateService) { }
 
     @Put('/:id')
     async execute(
