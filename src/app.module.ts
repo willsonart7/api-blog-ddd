@@ -6,12 +6,14 @@ import { MongoDbModule } from './shared/infraestructure/libs/mongodb/mongo.modul
 import { SharedModule } from './shared/shared.module';
 import { AppController } from './app.controller';
 import { PostModule } from './post/post.module';
+import { PostgresModule } from './shared/infraestructure/libs/postgres/postgres.module';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             load: [configuration],
         }),
+        PostgresModule,
         MongoDbModule,
         SharedModule,
         PostModule,
