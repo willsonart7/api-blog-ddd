@@ -5,7 +5,7 @@ import { PostId } from 'src/post/domain/post.id';
 import { MongoRepository } from 'src/post/domain/post.repository';
 
 export class PostMongoRepository implements MongoRepository {
-    constructor(@Inject('DATABASE_CONNECTION') private db: Db) {}
+    constructor(@Inject('DATABASE_CONNECTION') private db: Db) { }
 
     private collectionName(): string {
         return 'posts';
@@ -19,6 +19,15 @@ export class PostMongoRepository implements MongoRepository {
             return null;
         }
         return Post.toDomain(post);
+    }
+
+    async findAll(): Promise<Post[]> {
+        const postsRaw = await this.db
+            .collection(this.collectionName())
+            .find({status: "active"})
+            .toArray();
+
+        return postsRaw.map(postRaw => (Post.toDomain(postRaw)));
     }
 
     async save(post: Post): Promise<void> {
