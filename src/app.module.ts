@@ -7,16 +7,18 @@ import { SharedModule } from './shared/shared.module';
 import { AppController } from './app.controller';
 import { PostModule } from './post/post.module';
 import { PostgresModule } from './shared/infraestructure/libs/postgres/postgres.module';
+import { UserModule } from './user/user.module';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             load: [configuration],
         }),
-        PostgresModule,
-        MongoDbModule,
+        // PostgresModule,
+        // MongoDbModule,
         SharedModule,
         PostModule,
+        UserModule,
     ],
     controllers: [AppController],
     providers: [],
