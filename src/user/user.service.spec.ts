@@ -29,7 +29,7 @@ describe('UserService', () => {
     }
 
     const newUser = await service.create(requestUser)
-      expect(newUser).toEqual(requestUser);
+    expect(newUser).toEqual(requestUser);
   });
 
   it('should be create admin', async () => {
@@ -43,7 +43,7 @@ describe('UserService', () => {
     }
 
     const newUser = await service.create(requestUser)
-      expect(newUser).toEqual(requestUser);
+    expect(newUser).toEqual(requestUser);
   });
 
 
@@ -58,6 +58,15 @@ describe('UserService', () => {
     }
 
     const newUser = await service.create(requestUser)
-      expect(newUser).toEqual(requestUser);
+    expect(newUser).toEqual(requestUser);
   });
+
+
+
+  it('should return all users', async () => {
+    const users = await service.findAll()
+    expect(users).toEqual([]);
+  });
+
+
 });

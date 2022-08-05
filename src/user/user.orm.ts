@@ -9,4 +9,13 @@ export class UserOrm {
         this.users.push(user)
     }
 
+    public findAll() {
+        return this.users
+    }
+
+    public findOne(id: string){
+        return this.users.find(user => (user.id == id))
+    }
+
+
 }
