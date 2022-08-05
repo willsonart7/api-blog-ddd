@@ -12,12 +12,18 @@ export class UserService {
   constructor(
     private readonly userOrm: UserOrm,
     private readonly sendgridService: SendgridServise
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
 
     const newUser = new User(createUserDto)
-    await this.userOrm.save(newUser)
+    await this.userOrm.save({
+      id: newUser.id,
+      email: newUser.email,
+      name: newUser.name,
+      lastName: newUser.lastName,
+      type: newUser.type
+    })
 
     await this.sendgridService.sendEmail(newUser)
 

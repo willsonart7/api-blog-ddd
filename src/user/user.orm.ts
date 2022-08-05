@@ -1,12 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { User } from "./entities/user.entity";
 
 @Injectable()
 export class UserOrm {
 
     private users = []
 
-    public save(user: User) {
+    public save(user: object) {
         this.users.push(user)
     }
 
