@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './user.controller';
-import { UserOrm } from './user.orm';
+import { UserOrm } from './utils/user.orm';
 import { UserService } from './user.service';
 import { SendgridServise } from './utils/sendgrid.service';
 
