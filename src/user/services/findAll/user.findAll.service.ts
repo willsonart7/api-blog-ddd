@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserOrm } from '../utils/user.orm';
+import { UserOrm } from '../../utils/user.orm';
 
 @Injectable()
 export class UserFindAllService {
