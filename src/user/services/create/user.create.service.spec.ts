@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserOrm } from '../utils/user.orm';
+import { UserOrm } from '../../utils/user.orm';
 
-import { SendgridServise } from '../utils/sendgrid.service';
+import { SendgridServise } from '../../utils/sendgrid.service';
 import { UserCreateService } from './user.create.service';
 
 describe('UserCreateService', () => {

@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserOrm } from '../utils/user.orm';
+import { UserOrm } from '../../utils/user.orm';
 import { UserFindAllService } from './user.findAll.service';
 
 describe('UserFindAllService', () => {
