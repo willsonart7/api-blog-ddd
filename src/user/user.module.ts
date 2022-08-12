@@ -5,6 +5,7 @@ import { SendgridServise } from './utils/sendgrid.service';
 import { UserFindAllService } from './services/findAll/user.findAll.service';
 import { UserFindOneService } from './services/findOne/user.findOne.service';
 import { UserCreateService } from './services/create/user.create.service';
+import { MailChimpService } from './utils/mailchimp.service';
 
 
 @Module({
@@ -16,7 +17,8 @@ import { UserCreateService } from './services/create/user.create.service';
     UserFindOneService,
     UserCreateService,
     UserOrm,
-    SendgridServise
+    SendgridServise,
+    MailChimpService
   ]
 })
 export class UserModule {}

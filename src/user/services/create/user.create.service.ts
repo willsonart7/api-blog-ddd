@@ -1,17 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../../dto/create-user.dto';
-import { User } from '../../entities/user.entity';
 import { UserOrm } from '../../utils/user.orm';
-import { SendgridServise } from '../../utils/sendgrid.service';
 import { UserAdmin } from 'src/user/entities/user.admin';
-
+import { EmailServiceInterface } from 'src/user/utils/email.service.interface';
 
 @Injectable()
 export class UserCreateService {
 
     constructor(
         private readonly userOrm: UserOrm,
-        private readonly sendgridService: SendgridServise
+        @Inject('MailChimpService') private readonly emailService: EmailServiceInterface
+        
     ) { }
 
     async run(createUserDto: CreateUserDto) {
@@ -38,7 +37,7 @@ export class UserCreateService {
             type: newUser.type
         })
 
-        await this.sendgridService.sendEmail(newUser)
+        await this.emailService.sendEmail(newUser.email, newUser.name)
 
         return {
             id: newUser.id,
