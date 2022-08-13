@@ -35,7 +35,7 @@ export class User {
 
         } else if (this.type == "admin") {
             this.canCreateTest = true
-            this.canEditUser = false
+            this.canEditUser = true
 
         } else {
             this.canCreateTest = false

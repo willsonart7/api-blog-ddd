@@ -4,6 +4,8 @@ import { User } from '../../entities/user.entity';
 import { UserOrm } from '../../utils/user.orm';
 import { SendgridServise } from '../../utils/sendgrid.service';
 import { UserAdmin } from 'src/user/entities/user.admin';
+import { UserTeacher } from 'src/user/entities/user.teacher';
+import { UserStudent } from 'src/user/entities/user.student';
 
 
 @Injectable()
@@ -18,16 +20,16 @@ export class UserCreateService {
 
         let newUser
 
-        switch(createUserDto.type) {
-            case 'admin': 
-                 newUser = UserAdmin.create(createUserDto.id, createUserDto.email, createUserDto.name, createUserDto.lastName)
-            break;
+        switch (createUserDto.type) {
+            case 'admin':
+                newUser = UserAdmin.create(createUserDto.id, createUserDto.email, createUserDto.name, createUserDto.lastName)
+                break;
             case 'teacher':
-                //
-            break;
+                newUser = UserTeacher.create(createUserDto.id, createUserDto.email, createUserDto.name, createUserDto.lastName)
+                break;
             case 'student':
-                //
-            break;
+                newUser = UserStudent.create(createUserDto.id, createUserDto.email, createUserDto.name, createUserDto.lastName)
+                break;
         }
 
         await this.userOrm.save({
