@@ -1,21 +1,22 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserOrm } from './utils/user.orm';
-import { UserService } from './user.service';
-import { SendgridServise } from './utils/sendgrid.service';
+import { UserOrm } from '../../utils/user.orm';
 
-describe('UserService', () => {
-  let service: UserService;
+import { SendgridServise } from '../../utils/sendgrid.service';
+import { UserCreateService } from './user.create.service';
+
+describe('UserCreateService', () => {
+  let service: UserCreateService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        UserService,
+        UserCreateService,
         UserOrm,
         SendgridServise
       ],
     }).compile();
 
-    service = module.get<UserService>(UserService);
+    service = module.get<UserCreateService>(UserCreateService);
   });
 
   it('should be create student', async () => {
@@ -28,7 +29,7 @@ describe('UserService', () => {
       type: "student" as "student"
     }
 
-    const newUser = await service.create(requestUser)
+    const newUser = await service.run(requestUser)
     expect(newUser).toEqual(requestUser);
   });
 
@@ -42,7 +43,7 @@ describe('UserService', () => {
       type: "admin" as "admin"
     }
 
-    const newUser = await service.create(requestUser)
+    const newUser = await service.run(requestUser)
     expect(newUser).toEqual(requestUser);
   });
 
@@ -57,15 +58,8 @@ describe('UserService', () => {
       type: "teacher" as "teacher"
     }
 
-    const newUser = await service.create(requestUser)
+    const newUser = await service.run(requestUser)
     expect(newUser).toEqual(requestUser);
-  });
-
-
-
-  it('should return all users', async () => {
-    const users = await service.findAll()
-    expect(users).toEqual([]);
   });
 
 
