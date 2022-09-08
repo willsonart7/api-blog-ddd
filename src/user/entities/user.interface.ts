@@ -12,5 +12,4 @@ export abstract class User {
     protected canEditUser: boolean;
     protected canCreateTest: boolean;
 
-    // abstract create(): T;
 }

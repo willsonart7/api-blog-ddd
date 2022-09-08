@@ -1,26 +1,25 @@
 import { User } from "./user.interface";
 
-
-export class UserAdmin extends User {
+export class UserStudent extends User {
 
     public id: string;
     public email: string;
     public status: "active" | "inactive";
     public name: string;
     public lastName: string;
-    public type: "admin";
+    public type: "student";
     public canEditUser: boolean;
     public canCreateTest: boolean;
 
-    public static create(id: string, email: string, name: string, lastName: string): UserAdmin {
+    public static create(id: string, email: string, name: string, lastName: string): UserStudent {
         const defaultStatus = "active";
-        const canCreateTest = true;
-        const canEditUser = true;
-        const newUserAdmin = new UserAdmin(id, email, name, lastName, defaultStatus, "admin", canCreateTest, canEditUser)
-        return newUserAdmin
+        const canCreateTest = false;
+        const canEditUser = false;
+        const newUserStudent = new UserStudent(id, email, name, lastName, defaultStatus, "student", canCreateTest, canEditUser)
+        return newUserStudent
     }
 
-    constructor(id: string, email: string, name: string, lastName: string, status: "active" | "inactive", type: "admin", canCreateTest: boolean, canEditUser: boolean) {
+    constructor(id: string, email: string, name: string, lastName: string, status: "active" | "inactive", type: "student", canCreateTest: boolean, canEditUser: boolean) {
         super()
         this.id = id
         this.email = email
@@ -31,5 +30,4 @@ export class UserAdmin extends User {
         this.canCreateTest = canCreateTest
         this.canEditUser = canEditUser
     }
-
 }

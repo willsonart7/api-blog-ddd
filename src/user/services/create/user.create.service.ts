@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../../dto/create-user.dto';
 import { UserOrm } from '../../utils/user.orm';
-import { UserAdmin } from 'src/user/entities/user.admin';
+import { UserFactory } from 'src/user/entities/user.factory';
 import { EmailServiceInterface } from 'src/user/utils/email.service.interface';
+
 
 @Injectable()
 export class UserCreateService {
@@ -10,24 +11,11 @@ export class UserCreateService {
     constructor(
         private readonly userOrm: UserOrm,
         @Inject('MailChimpService') private readonly emailService: EmailServiceInterface
-        
     ) { }
 
     async run(createUserDto: CreateUserDto) {
 
-        let newUser
-
-        switch(createUserDto.type) {
-            case 'admin': 
-                 newUser = UserAdmin.create(createUserDto.id, createUserDto.email, createUserDto.name, createUserDto.lastName)
-            break;
-            case 'teacher':
-                //
-            break;
-            case 'student':
-                //
-            break;
-        }
+        const newUser = UserFactory.create(createUserDto.id, createUserDto.email, createUserDto.name, createUserDto.lastName, createUserDto.type)
 
         await this.userOrm.save({
             id: newUser.id,
