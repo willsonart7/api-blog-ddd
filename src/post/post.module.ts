@@ -13,7 +13,7 @@ import { PostPostgresRepository } from './infraestructure/repositories/post.post
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([PostEntity])
+        // TypeOrmModule.forFeature([PostEntity])
     ],
     controllers: [
         PostPutController,
@@ -21,7 +21,7 @@ import { PostPostgresRepository } from './infraestructure/repositories/post.post
         PostGetController
     ],
     providers: [
-        PostMongoRepository,
+        // PostMongoRepository,
         PostPostgresRepository,
         PostCreateService,
         PostFindService,
