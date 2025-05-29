@@ -4,6 +4,7 @@ import { PostRepository } from "src/post/domain/post.repository";
 import { PostEntity } from "src/shared/infraestructure/libs/postgres/entities/post.entity";
 import { Post } from "src/post/domain/post";
 import { PostId } from "src/post/domain/post.id";
+import { PostName } from 'src/post/domain/post.name';
 
 export class PostPostgresRepository implements PostRepository {
 
@@ -15,6 +16,18 @@ export class PostPostgresRepository implements PostRepository {
     async find(postId: PostId): Promise<Post | null> {
         const postRaw = await this.db.createQueryBuilder()
             .where("id = :id", { id: postId.getValue() })
+            .getOne();
+
+        if (!postRaw) {
+            return null;
+        }
+
+        return Post.toDomain(postRaw);
+    }
+
+    async findByName(name: PostName): Promise<Post | null> {
+        const postRaw = await this.db.createQueryBuilder()
+            .where("name = :name", { name: name.getValue() })
             .getOne();
 
         if (!postRaw) {
